@@ -8,3 +8,5 @@ const router = express.Router();
 
 
 router.get('/', (req, res) => { return res.json("API OSs respondendo") });
+
+module.exports = router;
