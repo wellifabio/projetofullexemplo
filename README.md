@@ -11,7 +11,7 @@
 ||JWT|Autenticação|
 |[<img src="https://logowik.com/content/uploads/images/visual-studio-code7642.jpg" style="width:50px;">](https://code.visualstudio.com/)|VsCode|IDE Back, Front|
 |[<img src="https://cdn-icons-png.flaticon.com/512/919/919827.png" style="width:50px">](https://developer.mozilla.org/pt-BR/docs/Web/HTML)[<img src="https://cdn-icons-png.flaticon.com/512/919/919826.png" style="width:50px">](https://developer.mozilla.org/pt-BR/docs/Web/CSS)[<img src="https://cdn5.vectorstock.com/i/1000x1000/27/74/vanilla-javascript-language-vector-31602774.jpg" style="width:50px">](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript)|HTML, CSS, JS Vanilla|Front-End|
-|[<img src="https://axios-http.com/assets/logo.svg" style="height:50px">](https://axios-http.com/ptbr/docs/intro)|Axios|Front End consumir API|
+|[<img src="https://axios-http.com/assets/logo.svg" style="width:100px">](https://axios-http.com/ptbr/docs/intro)|Axios|Front End consumir API|
 
 ## Passos para a Execução
 - 1 Clonar este repositório
