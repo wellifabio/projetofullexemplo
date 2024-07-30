@@ -10,8 +10,6 @@ const validaAcesso = (req, res, next) => {
             next();
         }
     })
-
-    res.status(200).end();
 }
 
 module.exports = {

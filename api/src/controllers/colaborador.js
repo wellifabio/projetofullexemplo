@@ -24,10 +24,10 @@ const login = async (req, res) => {
 };
 
 const read = async (req, res) => {
-    if (req.query.matricula) {
+    if (req.params.matricula !== undefined) {
         const colaborador = await prisma.colaborador.findUnique({
             where: {
-                matricula: req.query.matricula
+                matricula: req.params.matricula
             }
         });
         return res.json(colaborador);
