@@ -23,6 +23,24 @@ const login = async (req, res) => {
     }
 };
 
+const create = async (req, res) => {
+    try {
+        const { matricula, nome, cargo, setor, pin } = req.body;
+        const colaborador = await prisma.colaborador.create({
+            data: {
+                matricula: matricula,
+                nome: nome,
+                cargo: cargo,
+                setor: setor,
+                pin: pin
+            }
+        });
+        return res.status(201).json(colaborador);
+    } catch (error) {
+        return res.status(400).json({ message: error.message });
+    }
+};
+
 const read = async (req, res) => {
     if (req.params.matricula !== undefined) {
         const colaborador = await prisma.colaborador.findUnique({
@@ -37,7 +55,37 @@ const read = async (req, res) => {
     }
 };
 
+const update = async (req, res) => {
+    try {
+        const colaborador = await prisma.colaborador.update({
+            where: {
+                matricula: req.body.matricula
+            },
+            data: req.body
+        });
+        return res.status(202).json(colaborador);
+    } catch (error) {
+        return res.status(404).json({ message: "colaborador não encontrado" });
+    }
+};
+
+const del = async (req, res) => {
+    try {
+        const colaborador = await prisma.colaborador.delete({
+            where: {
+                matricula: req.params.matricula
+            }
+        });
+        return res.status(204).json(colaborador);
+    } catch (error) {
+        return res.status(404).json({ message: "colaborador não encontrado" });
+    }
+}
+
 module.exports = {
     login,
-    read
+    create,
+    read,
+    update,
+    del
 };
