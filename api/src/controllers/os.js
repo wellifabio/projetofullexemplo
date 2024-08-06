@@ -14,23 +14,32 @@ const create = async (req, res) => {
 
 const read = async (req, res) => {
     if (req.params.matricula !== undefined) {
-        if (req.body.setor == undefined) {
+        //Buscar colaborador para saber qual o setor
+        const colaborador = await prisma.colaborador.findUnique({
+            where: {
+                matricula: req.params.matricula
+            }
+        });
+        //Verificar se não é do setor de manutenção
+        if (colaborador.setor !== "Manutenção") {
+            //Listar todas as OSs do colaborador
             const os = await prisma.os.findMany({
                 where: {
-                    matricula: req.params.matricula
+                    colaborador: req.params.matricula
                 }
             });
-        } else {
-            if (req.body.setor == "Manutenção") {
-                const os = await prisma.os.findMany({
-                    where: {
-                        encerramento: null,
-                    }
-                });
-            }
+            return res.json(os);
+        }else{
+            //Listar todas as OSs abertas
+            const os = await prisma.os.findMany({
+                where: {
+                    encerramento: null
+                }
+            });
+            return res.json(os);
         }
-        return res.json(os);
     } else {
+        //Listar todas as OSs
         const oses = await prisma.os.findMany();
         return res.json(oses);
     }
@@ -40,7 +49,7 @@ const update = async (req, res) => {
     try {
         const os = await prisma.os.update({
             where: {
-                id: parseInt(req.params.id)
+                id: parseInt(req.body.id)
             },
             data: req.body
         });

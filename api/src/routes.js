@@ -14,6 +14,19 @@ router.get('/colaborador/:matricula', Middleware.validaAcesso, Colaborador.read)
 router.put('/colaborador', Middleware.validaAcesso, Colaborador.update);
 router.delete('/colaborador/:matricula', Middleware.validaAcesso, Colaborador.del);
 
+router.post('/os', Middleware.validaAcesso, Os.create);
+router.get('/os', Middleware.validaAcesso, Os.read);
+router.get('/os/:matricula', Middleware.validaAcesso, Os.read);
+router.put('/os', Middleware.validaAcesso, Os.update);
+router.delete('/os/:id', Middleware.validaAcesso, Os.del);
+
+router.post('/comentario', Middleware.validaAcesso, Comentario.create);
+router.get('/comentario', Middleware.validaAcesso, Comentario.read);
+router.get('/comentario/:osId', Middleware.validaAcesso, Comentario.read);
+router.put('/comentario', Middleware.validaAcesso, Comentario.update);
+router.delete('/comentario/:id', Middleware.validaAcesso, Comentario.del);
+
+
 router.get('/', (req, res) => { return res.json("API OSs respondendo") });
 
 module.exports = router;
