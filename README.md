@@ -33,3 +33,8 @@ npx nodemon
 ```
 - Acessar a pasta ./front
 - Exercutar o arquivos **index.html** com **live server**
+
+## Wireframe e Protótipo
+![Wireframe](./docs/assets/wireframe2.png)
+![Protótipo](./docs/assets/prototipo.png)
+- [Arquivo Figma](./docs/assets/ServiFacil.fig)
