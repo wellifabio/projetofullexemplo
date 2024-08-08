@@ -37,5 +37,6 @@ npx nodemon
 ## Wireframe e Protótipo
 ![Wireframe](./docs/design/wireframe2.png)
 ![Protótipo](./docs/design/prototipo.png)
+![Protótipo Web](./docs/design/prototipo-web.png)
 - [Arquivo Figma](./docs/design/ServiFacil.fig)
 - [Weireframe WEB em PDF](./docs/design/ServiFacil-WEB.pdf)
