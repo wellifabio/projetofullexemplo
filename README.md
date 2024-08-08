@@ -2,8 +2,8 @@
 
 ## Tecnologias
 
-||Tecnologia|Tarefa|
-|-|-|-|
+|<img src="./docs/design/icone.png" width="50px">|Tecnologia|Tarefa|
+|:-:|-|-|
 |[<img src="https://w7.pngwing.com/pngs/717/111/png-transparent-mysql-round-logo-tech-companies-thumbnail.png" style="width:50px;">](https://www.apachefriends.org/pt_br/index.html)|XAMPP|BD MySQL MariaDB
 |[<img src="https://static-00.iconduck.com/assets.00/node-js-icon-454x512-nztofx17.png" style="width:50px;">](https://nodejs.org/en)|NodeJS|API Back-End|
 ||Prisma|ORM BD MySQL|
@@ -31,8 +31,8 @@ npx prisma migrate dev --name init
 ```bash
 npx nodemon
 ```
-- Acessar a pasta ./front
-- Exercutar o arquivos **index.html** com **live server**
+- 7 Acessar a pasta ./front
+- 8 Exercutar o arquivos **index.html** com **live server**
 
 ## Wireframe e Protótipo
 ![Wireframe](./docs/design/wireframe2.png)
