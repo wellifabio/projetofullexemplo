@@ -1,4 +1,4 @@
-# Projeto OS - Ordens de Serviço
+# Projeto ServiFacil - Gerenciamento de OSs (Ordens de Serviço)
 
 ## Tecnologias
 
