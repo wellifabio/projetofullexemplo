@@ -19,6 +19,7 @@
 - 3 Na pasta ./api criar um arquivo **.env** contendo: 
 ```js
 DATABASE_URL="mysql://root@localhost:3306/oss?schema=public&timezone=UTC"
+KEY="base64:q3
 ```
 - 4 Abrir XAMPP  e clicar em Start nos serviços **Mysql** e **Apache**.
 - 5 Instalar as dependências e o banco de dados
@@ -27,12 +28,16 @@ cd api
 npm i
 npx prisma migrate dev --name init
 ```
-- 6 Voltar ao VsCode e Exercutar a API
+- 6 Exercutar a API
 ```bash
 npx nodemon
 ```
-- 7 Acessar a pasta ./front
-- 8 Exercutar o arquivos **index.html** com **live server**
+- 7 Abrir um outro terninal para o Front-End, acessar a pasta ./front, instalar as dependências e iniciar o front
+```bash
+cd front
+npm i
+npm start
+```
 
 ## Wireframe e Protótipo
 ![Wireframe](./docs/design/wireframe2.png)
