@@ -17,9 +17,10 @@
   --color-tertiary: #32698f;
   --color-quaternary: #1a9f8e;
   --color-quinary: #FFFFFF;
+  --color-transparent: rgba(26, 159, 142, 0.3);
 }
 
-body {
+#root {
   margin: 0px;
   padding: 0px;
   width: 100%;
@@ -71,4 +72,52 @@ header div h1 {
 
 .c {
   color: var(--color-quaternary);
+}
+
+button{
+  background-color: var(--color-quaternary);
+  color: var(--color-quinary);
+  font-size: 16px;
+  font-weight: bold;
+  padding: 10px 20px;
+  border: none;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  min-width: 160px;
+  transition: 0.3s;
+}
+
+button:hover{
+  background-color: var(--color-tertiary);
+}
+
+input{
+  background-color: var(--color-transparent);
+  color: var(--color-secondary);
+  border: none;
+  border-bottom: 1px solid var(--color-secondary);
+  font-size: 16px;
+  font-weight: bold;
+  padding: 10px 20px;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  min-width: 160px;
+  transition: 0.3s;
+}
+
+label{
+  color: var(--color-secondary);
+  font-size: 16px;
+  padding: 10px 20px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+form{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: left;
+  padding: 20px;
 }
