@@ -34,12 +34,13 @@ npx prisma migrate dev --name init
 ```bash
 npx nodemon
 ```
-- 7 Abrir um outro terninal para o Front-End, acessar a pasta ./front, instalar as dependências e iniciar o front
+- 7 Abrir um outro terninal para o Front-End, acessar a pasta ./react, instalar as dependências e iniciar o front
 ```bash
-cd front
+cd react
 npm i
 npm start
 ```
+- 8 Ou ./vanilla e executar o index.html com live server
 
 ## Wireframe e Protótipo
 ![Wireframe](./docs/design/wireframe2.png)
