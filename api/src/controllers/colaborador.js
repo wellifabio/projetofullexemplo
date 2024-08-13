@@ -9,6 +9,13 @@ const login = async (req, res) => {
         where: {
             matricula: matricula,
             pin: pin
+        },
+        select:{
+            "matricula": true,
+            "nome": true,
+            "cargo": true,
+            "setor": true,
+            "oss": true 
         }
     });
     if (colaborador) {
@@ -52,8 +59,7 @@ const read = async (req, res) => {
                 "nome": true,
                 "cargo": true,
                 "setor": true,
-                "oss": true,
-                "comentarios": true
+                "oss": true 
             }
         });
         return res.json(colaborador);

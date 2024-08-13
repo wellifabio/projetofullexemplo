@@ -20,7 +20,7 @@
   --color-transparent: rgba(26, 159, 142, 0.3);
 }
 
-#root {
+#root{
   margin: 0px;
   padding: 0px;
   width: 100%;
@@ -29,7 +29,7 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  background-image: url("../public/assets/fundo.png");
+  background-image: url("../assets/fundo.png");
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -42,7 +42,7 @@ footer {
   height: 10vh;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   background-color: var(--color-quinary);
   padding: 0px 20px;
@@ -120,4 +120,8 @@ form{
   justify-content: center;
   align-items: left;
   padding: 20px;
+}
+
+.oculto{
+  display: none;
 }

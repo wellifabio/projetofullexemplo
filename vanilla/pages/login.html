@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styles/styles.css">
+    <link rel="shortcut icon" href="../assets/icone.png" type="image/x-icon">
+    <title>ServiFacil</title>
+</head>
+
+<body onload="iniciar()">
+    <header>
+        <div>
+            <h1 class="a">S</h1>
+            <h1 class="b">ervi</h1>
+            <h1 class="c">Facil</h1>
+        </div>
+        <nav>
+            <button onclick="alternarCadastroLogin()" id="bt1">Cadstre-se</button>
+        </nav>
+    </header>
+    <main>
+        <form id="login">
+            <input type="number" id="matricula" name="matricula" placeholder="Matrícula" required />
+            <label for="matricula">Digite sua Matrícula</label>
+            <input type="password" id="pin" name="pin" placeholder="PIN" required />
+            <label for="pin">Digite seu PIN</label>
+            <button type="submit">Login</button>
+        </form>
+        <form id="cadastro">
+            <input type="number" id="matriculac" name="matricula" placeholder="Matrícula" required />
+            <label for="matriculac">Digite sua Matrícula</label>
+            <input type="text" id="nome" name="nome" placeholder="Nome" required />
+            <label for="nome">Digite seu nome completo</label>
+            <input type="text" id="cargo" name="cargo" placeholder="Cargo" required />
+            <label for="cargo">Digite seu cargo</label>
+            <input type="text" id="setor" name="setor" placeholder="Setor" required />
+            <label for="setor">Digite seu setor</label>
+            <input type="password" id="pinc" name="pin" placeholder="PIN" required />
+            <label for="pin">Digite seu PIN</label>
+            <input type="password" id="pin2" name="pin2" placeholder="PIN" required />
+            <label for="pin2">Confirme seu PIN</label>
+            <button type="submit">Cadastrar</button>
+        </form>
+    </main>
+    <footer>
+        <h2>By Prof. Wellington</h2>
+    </footer>
+</body>
+<script src="../scripts/login.js"></script>
+</html>
