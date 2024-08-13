@@ -17,7 +17,7 @@ router.delete('/colaborador/:matricula', Middleware.validaAcesso, Colaborador.de
 router.post('/os', Middleware.validaAcesso, Os.create);
 router.get('/os', Middleware.validaAcesso, Os.read);
 router.get('/os/:matricula', Middleware.validaAcesso, Os.read);
-router.put('/os', Middleware.validaAcesso, Os.update);
+router.patch('/os', Middleware.validaAcesso, Os.update);
 router.delete('/os/:id', Middleware.validaAcesso, Os.del);
 
 router.post('/comentario', Middleware.validaAcesso, Comentario.create);

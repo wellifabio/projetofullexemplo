@@ -20,7 +20,7 @@
   --color-transparent: rgba(26, 159, 142, 0.3);
 }
 
-body{
+body {
   margin: 0px;
   padding: 0px;
   width: 100%;
@@ -49,6 +49,16 @@ footer {
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
 }
 
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 80vh;
+  overflow-y: auto;
+}
+
 header div {
   display: flex;
   flex-direction: row;
@@ -74,7 +84,7 @@ header div h1 {
   color: var(--color-quaternary);
 }
 
-button{
+button {
   background-color: var(--color-quaternary);
   color: var(--color-quinary);
   font-size: 16px;
@@ -87,11 +97,11 @@ button{
   transition: 0.3s;
 }
 
-button:hover{
+button:hover {
   background-color: var(--color-tertiary);
 }
 
-input{
+input {
   background-color: var(--color-transparent);
   color: var(--color-secondary);
   border: none;
@@ -105,7 +115,7 @@ input{
   transition: 0.3s;
 }
 
-label{
+label {
   color: var(--color-secondary);
   font-size: 16px;
   padding: 10px 20px;
@@ -114,7 +124,7 @@ label{
   transition: 0.3s;
 }
 
-form{
+form {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -122,7 +132,7 @@ form{
   padding: 20px;
 }
 
-.msg{
+.msg {
   color: var(--color-secondary);
   font-size: 16px;
   font-weight: bold;
@@ -131,17 +141,96 @@ form{
   transition: 0.3s;
 }
 
-.container{
+.container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  width: 100%;
-  max-width: 700px;
+  width: 700px;
+  max-width: 100%;
   max-height: 80vh;
   overflow-y: auto;
 }
 
-.oculto{
+.os {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: left;
+  min-width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+}
+
+.linha {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin: 5px;
+}
+
+.designada {
+  background-color: var(--color-tertiary);
+  color: var(--color-quinary);
+}
+
+.nao-designada {
+  background-color: var(--color-quaternary);
+  color: var(--color-quinary);
+}
+
+.encerrada {
+  background-color: var(--color-transparent);
+}
+
+.modal {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.janela {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  max-width: 600px;
+  max-height: 400px;
+  margin: 10% auto;
+  padding: 20px;
+  background-color: var(--color-quinary);
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+}
+
+.janela textarea {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  margin: 10px;
+  border: none;
+  border-bottom: 1px solid var(--color-secondary);
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.janela button {
+  margin: 5px;
+}
+
+.oculto {
   display: none;
 }
