@@ -122,6 +122,26 @@ form{
   padding: 20px;
 }
 
+.msg{
+  color: var(--color-secondary);
+  font-size: 16px;
+  font-weight: bold;
+  padding: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 700px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
 .oculto{
   display: none;
 }

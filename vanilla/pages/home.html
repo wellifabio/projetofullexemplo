@@ -6,23 +6,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../styles/styles.css">
     <link rel="shortcut icon" href="../assets/icone.png" type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <title>ServiFacil</title>
 </head>
 
-<body>
+<body onload="iniciar()">
     <header>
         <div>
             <h1 class="a">S</h1>
             <h1 class="b">ervi</h1>
             <h1 class="c">Facil</h1>
         </div>
+        <nav>
+            <button onclick="sair()" id="bt1">Sair</button>
+        </nav>
     </header>
     <main>
-        <h1>Main</h1>
+        <div class="container"></div>
     </main>
     <footer>
         <h2>By Prof. Wellington</h2>
+        <h2 class="msg">Mensagens do sistema</h2>
     </footer>
 </body>
-
+<script src="../scripts/home.js"></script>
 </html>
