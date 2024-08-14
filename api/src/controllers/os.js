@@ -26,14 +26,20 @@ const read = async (req, res) => {
             const os = await prisma.os.findMany({
                 where: {
                     colaborador: req.params.matricula
+                },
+                orderBy: {
+                    id: 'desc'
                 }
             });
             return res.json(os);
-        }else{
+        } else {
             //Listar todas as OSs abertas
             const os = await prisma.os.findMany({
                 where: {
                     encerramento: null
+                },
+                orderBy: {
+                    id: 'desc'
                 }
             });
             return res.json(os);
