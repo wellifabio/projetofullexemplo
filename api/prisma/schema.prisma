@@ -36,6 +36,6 @@ model Comentario{
   colaborador String @db.VarChar(8)
   data DateTime @default(now())
   comentario String @db.VarChar(255)
-  oss Os @relation("possui",fields: [os], references: [id])
+  oss Os @relation("possui",fields: [os], references: [id], onDelete: Cascade)
   colaboradores Colaborador @relation("faz",fields: [colaborador], references: [matricula],onDelete: Cascade)
 }

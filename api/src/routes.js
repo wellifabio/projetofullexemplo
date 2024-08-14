@@ -16,7 +16,11 @@ router.delete('/colaborador/:matricula', Middleware.validaAcesso, Colaborador.de
 
 router.post('/os', Middleware.validaAcesso, Os.create);
 router.get('/os', Middleware.validaAcesso, Os.read);
-router.get('/os/:matricula', Middleware.validaAcesso, Os.read);
+router.get('/os/id/:id', Middleware.validaAcesso, Os.read);
+router.get('/os/colaborador/:matricula', Middleware.validaAcesso, Os.readByColaborador);
+router.get('/os/executor/:matricula', Middleware.validaAcesso, Os.readByExecutor);
+router.get('/os/abertas', Middleware.validaAcesso, Os.readAbertas);
+router.get('/os/fechadas', Middleware.validaAcesso, Os.readFechadas);
 router.patch('/os', Middleware.validaAcesso, Os.update);
 router.delete('/os/:id', Middleware.validaAcesso, Os.del);
 

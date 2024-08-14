@@ -13,43 +13,81 @@ const create = async (req, res) => {
 };
 
 const read = async (req, res) => {
-    if (req.params.matricula !== undefined) {
-        //Buscar colaborador para saber qual o setor
-        const colaborador = await prisma.colaborador.findUnique({
+    if (req.params.id !== undefined) {
+        const os = await prisma.os.findUnique({
             where: {
-                matricula: req.params.matricula
+                id: parseInt(req.params.id)
+            },
+            select: {
+                id: true,
+                descricao: true,
+                colaborador: true,
+                executor: true,
+                abertura: true,
+                encerramento: true,
+                comentarios: true
             }
         });
-        //Verificar se não é do setor de manutenção
-        if (colaborador.setor !== "Manutenção") {
-            //Listar todas as OSs do colaborador
-            const os = await prisma.os.findMany({
-                where: {
-                    colaborador: req.params.matricula
-                },
-                orderBy: {
-                    id: 'desc'
-                }
-            });
-            return res.json(os);
-        } else {
-            //Listar todas as OSs abertas
-            const os = await prisma.os.findMany({
-                where: {
-                    encerramento: null
-                },
-                orderBy: {
-                    id: 'desc'
-                }
-            });
-            return res.json(os);
-        }
+        return res.json(os);
     } else {
-        //Listar todas as OSs
-        const oses = await prisma.os.findMany();
+        const oses = await prisma.os.findMany(
+            {
+                orderBy: {
+                    id: 'desc'
+                }
+            }
+        );
         return res.json(oses);
     }
 };
+
+const readByColaborador = async (req, res) => {
+    const os = await prisma.os.findMany({
+        where: {
+            colaborador: req.params.matricula
+        },
+        orderBy: {
+            id: 'desc'
+        }
+    });
+    return res.json(os);
+};
+
+const readByExecutor = async (req, res) => {
+    const os = await prisma.os.findMany({
+        where: {
+            executor: req.params.matricula
+        },
+        orderBy: {
+            id: 'desc'
+        }
+    });
+    return res.json(os);
+}
+
+const readAbertas = async (req, res) => {
+    const os = await prisma.os.findMany({
+        where: {
+            encerramento: null
+        },
+        orderBy: {
+            id: 'desc'
+        }
+    });
+    return res.json(os);
+}
+
+const readFechadas = async (req, res) => {
+    const os = await prisma.os.findMany({
+        where: {
+            encerramento: { not: null }
+        },
+        orderBy: {
+            id: 'desc'
+        }
+    });
+    return res.json(os);
+}
 
 const update = async (req, res) => {
     try {
@@ -81,6 +119,10 @@ const del = async (req, res) => {
 module.exports = {
     create,
     read,
+    readByColaborador,
+    readByExecutor,
+    readAbertas,
+    readFechadas,
     update,
     del
 };

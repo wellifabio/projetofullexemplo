@@ -13,12 +13,27 @@ async function iniciar() {
     if (!usuario) {
         window.location.href = './login.html';
     } else {
+        if (usuario.setor == 'Manutenção')
+            document.getElementById('bt1').classList.remove('oculto');
         m.innerHTML = `Olá, ${usuario.nome}`;
         await preencherColaboradores();
         await preencherOss();
         await exibirOss();
         console.table(usuario.oss);
         console.table(colaboradores);
+    }
+}
+
+async function iniciarProducao() {
+    if (!usuario) {
+        window.location.href = './login.html';
+    } else {
+        if (usuario.setor == 'Manutenção')
+            document.getElementById('bt1').classList.remove('oculto');
+        m.innerHTML = `Olá, ${usuario.nome}`;
+        await preencherColaboradores();
+        await preencherOssProducao();
+        await exibirOss();
     }
 }
 
@@ -61,7 +76,26 @@ async function preencherOss() {
             Authorization: usuario.token
         }
     };
-    await api.get(`/os/${usuario.matricula}`, options)
+    const rota = usuario.setor == 'Manutenção' ? `/os/abertas` : `/os/colaborador/${usuario.matricula}`;
+    await api.get(rota, options)
+        .then(res => {
+            oss.push(...res.data);
+        })
+        .catch(err => {
+            if (err.response.data.name = 'TokenExpiredError')
+                sair();
+            else
+                msg(err.response.data.name);
+        });
+}
+
+async function preencherOssProducao() {
+    const options = {
+        headers: {
+            Authorization: usuario.token
+        }
+    };
+    await api.get(`/os/executor/${usuario.matricula}`, options)
         .then(res => {
             oss.push(...res.data);
         })
@@ -165,6 +199,37 @@ async function janelaOs(id) {
     os.appendChild(janela);
 }
 
+function janelaComentario(id, tipo) {
+    const comentario = document.getElementById('comentario');
+    comentario.classList.remove('oculto');
+    comentario.innerHTML = '';
+    const janela = document.createElement('div');
+    if (tipo !== undefined) {
+        if (tipo == "atribuir") {
+            janela.innerHTML = `
+            <div class="linha"><h2>Comentário de atribuição<h2></div>
+            <div class="linha"><textarea id="texto" placeholder="Digite um comentário de atribuição"></textarea></div>
+            <button onclick="comentar(${id}, texto, '${tipo}')">Atribuir</button>
+        `;
+        } else {
+            janela.innerHTML = `
+            <div class="linha"><h2>Comentário de encerramento<h2></div>
+            <div class="linha"><textarea id="texto" placeholder="Digite um comentário de encerramento"></textarea></div>
+            <button onclick="comentar(${id}, texto, '${tipo}')">Encerrar</button>
+        `;
+        }
+    } else {
+        janela.innerHTML = `
+            <div class="linha"><h2>Comentário<h2></div>
+            <div class="linha"><textarea id="texto" placeholder="Digite um comentário"></textarea></div>
+            <button onclick="comentar(${id}, texto)">Comentar</button>
+        `;
+    }
+    janela.innerHTML += `<button onclick="comentario.classList.add('oculto')">Cancelar</button>`;
+    janela.className = 'janela';
+    comentario.appendChild(janela);
+}
+
 async function listarComentarios(id) {
     let tabela = '<table>';
     options = {
@@ -207,37 +272,6 @@ async function listarComentarios(id) {
     return tabela;
 }
 
-function janelaComentario(id, tipo) {
-    const comentario = document.getElementById('comentario');
-    comentario.classList.remove('oculto');
-    comentario.innerHTML = '';
-    const janela = document.createElement('div');
-    if (tipo !== undefined) {
-        if (tipo == "atribuir") {
-            janela.innerHTML = `
-            <div class="linha"><h2>Comentário de atribuição<h2></div>
-            <div class="linha"><textarea id="texto" placeholder="Digite um comentário de atribuição"></textarea></div>
-            <button onclick="comentar(${id}, texto, '${tipo}')">Atribuir</button>
-        `;
-        } else {
-            janela.innerHTML = `
-            <div class="linha"><h2>Comentário de encerramento<h2></div>
-            <div class="linha"><textarea id="texto" placeholder="Digite um comentário de encerramento"></textarea></div>
-            <button onclick="comentar(${id}, texto, '${tipo}')">Encerrar</button>
-        `;
-        }
-    } else {
-        janela.innerHTML = `
-            <div class="linha"><h2>Comentário<h2></div>
-            <div class="linha"><textarea id="texto" placeholder="Digite um comentário"></textarea></div>
-            <button onclick="comentar(${id}, texto)">Comentar</button>
-        `;
-    }
-    janela.innerHTML += `<button onclick="comentario.classList.add('oculto')">Cancelar</button>`;
-    janela.className = 'janela';
-    comentario.appendChild(janela);
-}
-
 function comentar(id, texto, tipo) {
     if (texto.value == '') {
         msg('Digite um comentário', true);
@@ -272,6 +306,78 @@ function comentar(id, texto, tipo) {
                     msg(err.response.data.name, true);
             });
     }
+}
+
+function criarOs(descricao) {
+    if (descricao.value == '') {
+        msg('Digite uma descrição', true);
+        return;
+    } else {
+        const dados = {
+            descricao: descricao.value,
+            colaborador: usuario.matricula
+        }
+        const options = {
+            headers: {
+                Authorization: usuario.token
+            }
+        };
+        api.post(`/os`, dados, options)
+            .then(res => {
+                window.location.reload();
+            })
+            .catch(err => {
+                if (err.response.data.name = 'TokenExpiredError')
+                    sair();
+                else
+                    msg(err.response.data.name, true);
+            });
+    }
+}
+
+function alterarOs(id, descricao) {
+    if (descricao.value == '') {
+        msg('Digite uma descrição', true);
+        return;
+    } else {
+        const dados = {
+            id: id,
+            descricao: descricao.value
+        }
+        const options = {
+            headers: {
+                Authorization: usuario.token
+            }
+        };
+        api.patch(`/os`, dados, options)
+            .then(res => {
+                window.location.reload();
+            })
+            .catch(err => {
+                if (err.response.data.name = 'TokenExpiredError')
+                    sair();
+                else
+                    msg(err.response.data.name, true);
+            });
+    }
+}
+
+function excluirOs(id) {
+    const options = {
+        headers: {
+            Authorization: usuario.token
+        }
+    };
+    api.delete(`/os/${id}`, options)
+        .then(res => {
+            window.location.reload();
+        })
+        .catch(err => {
+            if (err.response.data.name = 'TokenExpiredError')
+                sair();
+            else
+                msg(err.response.data.name, true);
+        });
 }
 
 function atribuir(id) {
