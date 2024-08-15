@@ -7,10 +7,11 @@
     <link rel="stylesheet" href="../styles/styles.css">
     <link rel="shortcut icon" href="../assets/icone.png" type="image/x-icon">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <title>ServiFacil</title>
 </head>
 
-<body onload="">
+<body onload="iniciarDashboard()">
     <header>
         <nav id="menu2">
             <img onclick="sandwish()" id="sandwish" src="../assets/menu.png"/>
@@ -27,12 +28,12 @@
         </nav>
     </header>
     <main>
-        <div class="filtros">
+        <div class="filtro-dashboard">
             <h3>A partid de:</h3>
-            <input type="date" name="inicio" id="inicio" onchange="filtrarData(this)" />
+            <input type="date" name="inicio" id="inicio" onchange="filtrarDataDashboard(this)" />
             <button onclick="window.location.reload()" style="margin:5px">Redefinir</button>
         </div>
-        <div class="container"></div>
+        <div class="corpo-dashboard"></div>
     </main>
     <footer>
         <h2>By Prof. Wellington</h2>

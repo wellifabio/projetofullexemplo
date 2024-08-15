@@ -1,9 +1,9 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
-const colaboradores = require("../../docs/seed/colaboradores.json");
-const oss = require("../../docs/seed/oss.json");
-const comentarios = require("../../docs/seed/comentarios.json");
+const colaboradores = require("./seed/colaboradores.json");
+const oss = require("./seed/oss.json");
+const comentarios = require("./seed/comentarios.json");
 
 async function main() {
     for (const colaborador of colaboradores) {

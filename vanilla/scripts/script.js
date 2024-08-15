@@ -37,15 +37,36 @@ async function iniciarProducao() {
     }
 }
 
+async function iniciarDashboard() {
+    const corpo = document.querySelector(".corpo-dashboard");
+    if (!usuario) {
+        window.location.href = './login.html';
+    } else {
+        if (usuario.setor == 'Manutenção')
+            document.getElementById('bt1').classList.remove('oculto');
+        m.innerHTML = `Olá, ${usuario.nome}`;
+        await preencherColaboradores();
+        await preencherOssFechadas();
+        const divTabela = document.createElement('div');
+        divTabela.className = 'dash-tabela';
+        divTabela.appendChild(await exibirTabela());
+        corpo.appendChild(divTabela);
+        const divGrafBarras = document.createElement('div');
+        divGrafBarras.className = 'dash-grafico';
+        divGrafBarras.appendChild(await exibirGraficoColaborador());
+        corpo.appendChild(divGrafBarras);
+    }
+}
+
 async function msg(mensagem, destaque) {
     m.innerHTML = mensagem;
     if (destaque == undefined) {
-        await setTimeout(() => {
+        setTimeout(() => {
             m.innerHTML = `Olá, ${usuario.nome}`;
         }, 3000);
     } else {
         m.style.color = 'darkred';
-        await setTimeout(() => {
+        setTimeout(() => {
             m.innerHTML = `Olá, ${usuario.nome}`;
             m.style.color = '';
         }, 3000);
@@ -108,17 +129,49 @@ async function preencherOssProducao() {
         });
 }
 
-async function filtrarData(e) {
+async function preencherOssFechadas() {
+    oss.splice(0, oss.length);
+    const options = {
+        headers: {
+            Authorization: usuario.token
+        }
+    };
+    await api.get(`/os/fechadas`, options)
+        .then(res => {
+            oss.push(...res.data);
+        })
+        .catch(err => {
+            if (err.response.data.name = 'TokenExpiredError')
+                sair();
+            else
+                msg(err.response.data.name);
+        });
+}
+
+async function filtrarDataProducao(e) {
     await preencherOssProducao();
     const filtradas = [];
-    await oss.forEach(os => {
+    oss.forEach(os => {
         if (new Date(os.encerramento) > new Date(e.value)) {
             filtradas.push(os);
         }
     });
-    await oss.splice(0, oss.length);
+    oss.splice(0, oss.length);
     oss.push(...filtradas);
     exibirOss();
+}
+
+async function filtrarDataDashboard(e) {
+    await preencherOssFechadas();
+    const filtradas = [];
+    oss.forEach(os => {
+        if (new Date(os.encerramento) > new Date(e.value)) {
+            filtradas.push(os);
+        }
+    });
+    oss.splice(0, oss.length);
+    oss.push(...filtradas);
+    exibirTabela();
 }
 
 async function exibirOss() {
@@ -161,12 +214,89 @@ async function exibirOss() {
         } else {
             div.classList.add('encerrada');
             div.innerHTML += `
-                <div class="linha">Encerrada em: ${new Date(os.encerramento).toLocaleString('pt-BR')}</div>
+                <div class="linha"><p>Encerrada em:</p><p>${new Date(os.encerramento).toLocaleString('pt-BR')}</p></div>
                 <div class="linhaBotao"><button onclick="janelaOs(${os.id})">Detalhes</button></div>
             `;
         }
         container.appendChild(div);
     });
+}
+
+async function exibirTabela() {
+    const table = document.createElement('table');
+    const thead = document.createElement('thead');
+    const tbody = document.createElement('tbody');
+    thead.innerHTML = `
+            <tr>
+                <th>Id</th>
+                <th>Colaborador</th>
+                <th>Executor</th>
+                <th>Abertura</th>
+                <th>Encerramento</th>
+            </tr>
+    `;
+    oss.forEach(os => {
+        tbody.innerHTML += `
+            <tr>
+                <td data-label="Id">${os.id}</td>
+                <td data-label="Colaborador">${colaboradores.find(c => c.matricula == os.colaborador).nome}</td>
+                <td data-label="Executor">${os.executor ? colaboradores.find(c => c.matricula == os.executor).nome : 'Não designado'}</td>
+                <td data-label="Abertura">${new Date(os.abertura).toLocaleDateString('pt-BR')}</td>
+                <td data-label="Encerramento">${os.encerramento ? new Date(os.encerramento).toLocaleDateString('pt-BR') : 'Não encerrada'}</td>
+            </tr>
+        `;
+    });
+    table.appendChild(thead);
+    table.appendChild(tbody);
+    return table;
+}
+
+async function exibirGraficoColaborador(){
+    const ctx = document.createElement('canvas').getContext('2d');
+    const colaboradores = [];
+    const oss = [];
+    const cores = [];
+    const backgroundColor = [];
+    const borderColor = [];
+    const labels = [];
+
+    oss.forEach(os => {
+        if (!colaboradores.includes(os.colaborador)) {
+            colaboradores.push(os.colaborador);
+            oss.push(1);
+        } else {
+            oss[colaboradores.indexOf(os.colaborador)]++;
+        }
+    });
+    colaboradores.forEach(c => {
+        const cor = `rgba(${Math.floor(Math.random() * 256)},${Math.floor(Math.random() * 256)},${Math.floor(Math.random() * 256)}`;
+        cores.push(cor);
+        backgroundColor.push(cor);
+        borderColor.push(cor);
+        labels.push(colaboradores.find(co => co.matricula == c).nome);
+    });
+
+    const graficoBarras = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Ordens de Serviço',
+                data: oss,
+                backgroundColor: backgroundColor,
+                borderColor: borderColor,
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+    return ctx;
 }
 
 async function janelaOs(id) {
