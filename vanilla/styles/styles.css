@@ -95,6 +95,7 @@ button {
   cursor: pointer;
   min-width: 160px;
   transition: 0.3s;
+  margin: 3px;
 }
 
 button:hover {
@@ -149,6 +150,18 @@ form {
   max-width: 100%;
   max-height: 80vh;
   overflow-y: auto;
+}
+
+.filtros{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 700px;
+  margin-top: 10px;
+  padding: 10px;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
 }
 
 .os {
@@ -269,18 +282,8 @@ tr:nth-child(even) {
 td {
   color: var(--color-quinary);
   font-size: 16px;
-  padding: 5px;
+  padding: 10px;
   text-align: center;
-}
-
-td input[type="datetime-local"] {
-  background-color: transparent;
-  width: fit-content;
-  border: none;
-  box-shadow: none;
-  margin: 0px;
-  padding: 0px;
-  color: var(--color-quinary);
 }
 
 tbody tr:hover {
@@ -307,11 +310,23 @@ tbody tr:hover td {
   display: none;
 }
 
+#sandwish{
+  width: 40px;
+  height: 40px;
+  background-color: var(--color-quinary);
+  border: none;
+  cursor: pointer;
+}
+
 .oculto {
   display: none;
 }
 
 @media screen and (max-width: 600px) {
+  header, footer{
+    justify-content: space-between;
+  }
+  
   header div h1 {
     font-size: 24px;
   }
@@ -341,12 +356,12 @@ tbody tr:hover td {
   #menu1{
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: top;
     position: absolute;
     top: 10vh;
     left: 0;
     width: 50%;
-    height: 15vh;
+    height: fit-content;
     background-color: var(--color-quinary);
     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
     padding: 5px;

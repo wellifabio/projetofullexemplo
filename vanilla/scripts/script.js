@@ -90,6 +90,7 @@ async function preencherOss() {
 }
 
 async function preencherOssProducao() {
+    oss.splice(0, oss.length);
     const options = {
         headers: {
             Authorization: usuario.token
@@ -105,6 +106,19 @@ async function preencherOssProducao() {
             else
                 msg(err.response.data.name);
         });
+}
+
+async function filtrarData(e) {
+    await preencherOssProducao();
+    const filtradas = [];
+    await oss.forEach(os => {
+        if (new Date(os.encerramento) > new Date(e.value)) {
+            filtradas.push(os);
+        }
+    });
+    await oss.splice(0, oss.length);
+    oss.push(...filtradas);
+    exibirOss();
 }
 
 async function exibirOss() {
@@ -427,4 +441,13 @@ function encerrar(id) {
 function sair() {
     window.localStorage.clear();
     window.location.href = './login.html';
+}
+
+function sandwish() {
+    const menu = document.getElementById('menu1');
+    if (menu.style.display == 'flex') {
+        menu.style.display = 'none';
+    } else {
+        menu.style.display = 'flex';
+    }
 }
