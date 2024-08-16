@@ -102,7 +102,8 @@ button:hover {
   background-color: var(--color-tertiary);
 }
 
-input {
+input,
+select {
   background-color: var(--color-transparent);
   color: var(--color-secondary);
   border: none;
@@ -152,16 +153,20 @@ form {
   overflow-y: auto;
 }
 
-.filtros{
+.filtros,
+.filtros-dashboard {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   width: 100%;
-  max-width: 700px;
   margin-top: 10px;
   padding: 10px;
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+}
+
+.filtros {
+  max-width: 700px;
 }
 
 .os {
@@ -294,7 +299,7 @@ tbody tr:hover td {
   color: var(--color-primary);
 }
 
-.comentarios{
+.comentarios {
   display: flex;
   flex-direction: column;
   justify-content: top;
@@ -306,11 +311,11 @@ tbody tr:hover td {
   overflow-y: auto;
 }
 
-#menu2{
+#menu2 {
   display: none;
 }
 
-#sandwish{
+#sandwish {
   width: 40px;
   height: 40px;
   background-color: var(--color-quinary);
@@ -318,25 +323,46 @@ tbody tr:hover td {
   cursor: pointer;
 }
 
-.corpo-dashboard{
+.corpo-dashboard {
   display: flex;
-  flex-direction: column;
-  justify-content: top;
-  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-around;
   margin: 10px;
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+  width: 100%;
+  overflow-y: auto;
 }
 
-.dash-tabela{
+.dash-tabela {
   display: flex;
   flex-direction: column;
   justify-content: top;
   align-items: center;
-  width: 100%;
-  max-width: 500px;
+  width: fit-content;
   margin: 5px;
-  max-height: 40vh;
+  max-height: 370px;
   overflow-y: auto;
+}
+
+.pie-graph {
+  display: flex;
+  flex-direction: column;
+  justify-content: top;
+  width: 400px;
+  max-width: 100%;
+  max-height: 370px;
+  margin: 5px;
+  padding: 5px;
+}
+
+.bar-graph {
+  display: flex;
+  flex-direction: column;
+  justify-content: top;
+  width: 100%;
+  max-width: 700px;
+  margin: 5px;
+  padding: 5px;
 }
 
 .oculto {
@@ -344,25 +370,28 @@ tbody tr:hover td {
 }
 
 @media screen and (max-width: 600px) {
-  header, footer{
+
+  header,
+  footer {
     justify-content: space-between;
   }
-  
+
   header div h1 {
     font-size: 24px;
   }
 
-  .comentarios{
+  .comentarios {
     max-height: 40vh;
   }
 
-  button{
+  button {
     min-width: 120px;
   }
 
-  thead{
+  thead {
     display: none;
   }
+
   table td {
     display: block;
     text-align: right;
@@ -373,8 +402,18 @@ tbody tr:hover td {
     float: left;
     font-weight: bold;
   }
-  
-  #menu1{
+
+  .dash-tabela {
+    width: 100%;
+  }
+
+  .filtros-dashboard {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 5px;
+  }
+
+  #menu1 {
     display: flex;
     flex-direction: column;
     justify-content: top;
@@ -389,7 +428,7 @@ tbody tr:hover td {
     display: none;
   }
 
-  #menu2{
+  #menu2 {
     display: flex;
   }
 }

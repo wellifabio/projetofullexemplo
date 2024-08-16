@@ -7,14 +7,14 @@
     <link rel="stylesheet" href="../styles/styles.css">
     <link rel="shortcut icon" href="../assets/icone.png" type="image/x-icon">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js" async="true"></script>
     <title>ServiFacil</title>
 </head>
 
 <body onload="iniciarDashboard()">
     <header>
         <nav id="menu2">
-            <img onclick="sandwish()" id="sandwish" src="../assets/menu.png"/>
+            <img onclick="sandwish()" id="sandwish" src="../assets/menu.png" />
         </nav>
         <div>
             <h1 class="a">S</h1>
@@ -28,12 +28,20 @@
         </nav>
     </header>
     <main>
-        <div class="filtro-dashboard">
+        <div class="filtros-dashboard">
             <h3>A partid de:</h3>
             <input type="date" name="inicio" id="inicio" onchange="filtrarDataDashboard(this)" />
-            <button onclick="window.location.reload()" style="margin:5px">Redefinir</button>
+            <h3>Executor:</h3>
+            <select id="executores" onchange="filtrarExecutorDashboard(this)">
+                <option value="0"></option>
+            </select>
+            <button onclick="window.location.reload()" style="margin:5px">Todos</button>
         </div>
-        <div class="corpo-dashboard"></div>
+        <div class="corpo-dashboard">
+            <div class="pie-graph"></div>
+            <div class="bar-graph"></div>
+            <div class="dash-tabela"></div>
+        </div>
     </main>
     <footer>
         <h2>By Prof. Wellington</h2>

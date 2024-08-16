@@ -4,6 +4,7 @@ const container = document.querySelector('.container');
 const m = document.querySelector('.msg');
 const oss = [];
 const colaboradores = [];
+const executores = []; 
 
 const api = axios.create({
     baseURL: uri
@@ -36,17 +37,17 @@ async function iniciarProducao() {
 }
 
 async function iniciarDashboard() {
-    const corpo = document.querySelector(".corpo-dashboard");
     if (!usuario) {
         window.location.href = './login.html';
     } else {
         m.innerHTML = `Olá, ${usuario.nome}`;
         await preencherColaboradores();
+        executores.push(...colaboradores.filter(c => c.setor == "Manutenção"));
         await preencherOssFechadas();
-        const divTabela = document.createElement('div');
-        divTabela.className = 'dash-tabela';
-        divTabela.appendChild(await exibirTabela());
-        corpo.appendChild(divTabela);
+        await exibirTabela();
+        await exibirGraficoColaborador();
+        await exibirGraficoOSs();
+        await preencherSelectExecutores();
     }
 }
 
@@ -140,6 +141,16 @@ async function preencherOssFechadas() {
         });
 }
 
+function preencherSelectExecutores() {
+    const select = document.getElementById('executores');
+    executores.forEach(e => {
+        const option = document.createElement('option');
+        option.value = e.matricula;
+        option.innerHTML = e.nome;
+        select.appendChild(option);
+    });
+}
+
 async function filtrarDataProducao(e) {
     await preencherOssProducao();
     const filtradas = [];
@@ -150,7 +161,7 @@ async function filtrarDataProducao(e) {
     });
     oss.splice(0, oss.length);
     oss.push(...filtradas);
-    exibirOss();
+    await exibirOss();
 }
 
 async function filtrarDataDashboard(e) {
@@ -163,7 +174,24 @@ async function filtrarDataDashboard(e) {
     });
     oss.splice(0, oss.length);
     oss.push(...filtradas);
-    exibirTabela();
+    await exibirTabela();
+    await exibirGraficoColaborador();
+    await exibirGraficoOSs();
+}
+
+async function filtrarExecutorDashboard(e){
+    await preencherOssFechadas();
+    const filtradas = [];
+    oss.forEach(os => {
+        if (os.executor == e.value) {
+            filtradas.push(os);
+        }
+    });
+    oss.splice(0, oss.length);
+    oss.push(...filtradas);
+    await exibirTabela();
+    await exibirGraficoColaborador();
+    await exibirGraficoOSs();
 }
 
 async function exibirOss() {
@@ -215,6 +243,8 @@ async function exibirOss() {
 }
 
 async function exibirTabela() {
+    const div = document.querySelector('.dash-tabela');
+    div.innerHTML = '';
     const table = document.createElement('table');
     const thead = document.createElement('thead');
     const tbody = document.createElement('tbody');
@@ -240,46 +270,37 @@ async function exibirTabela() {
     });
     table.appendChild(thead);
     table.appendChild(tbody);
-    return table;
+    div.appendChild(table);
 }
 
 async function exibirGraficoColaborador() {
-    const ctx = document.createElement('canvas').getContext('2d');
-    const colaboradores = [];
-    const oss = [];
-    const cores = [];
-    const backgroundColor = [];
-    const borderColor = [];
-    const labels = [];
+    const div = document.querySelector('.pie-graph');
+    div.innerHTML = '';
+    const h2 = document.createElement('h2');
+    h2.innerHTML = 'OSs executadas por colaborador';
+    div.appendChild(h2);
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
 
-    oss.forEach(os => {
-        if (!colaboradores.includes(os.colaborador)) {
-            colaboradores.push(os.colaborador);
-            oss.push(1);
-        } else {
-            oss[colaboradores.indexOf(os.colaborador)]++;
-        }
-    });
-    colaboradores.forEach(c => {
-        const cor = `rgba(${Math.floor(Math.random() * 256)},${Math.floor(Math.random() * 256)},${Math.floor(Math.random() * 256)}`;
-        cores.push(cor);
-        backgroundColor.push(cor);
-        borderColor.push(cor);
-        labels.push(colaboradores.find(co => co.matricula == c).nome);
+    //Dados
+    const executadas = [];
+    executores.forEach(e => {
+        executadas.push(oss.filter(o => o.executor == e.matricula).length);
     });
 
-    const graficoBarras = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: labels,
-            datasets: [{
-                label: 'Ordens de Serviço',
-                data: oss,
-                backgroundColor: backgroundColor,
-                borderColor: borderColor,
-                borderWidth: 1
-            }]
-        },
+    //Gráfico
+    const dados = {
+        labels: executores.map(c => c.nome),
+        datasets: [{
+            label: 'Executadas',
+            data: executadas,
+            backgroundColor: ['#000000', '#233c4c', '#32698f', '#1a9f8e', "#ffffff"],
+        }]
+    };
+    Chart.defaults.plugins.legend.display = true;
+    const config = {
+        type: 'pie',
+        data: dados,
         options: {
             scales: {
                 y: {
@@ -287,8 +308,55 @@ async function exibirGraficoColaborador() {
                 }
             }
         }
+    };
+    new Chart(ctx, config);
+    div.appendChild(canvas);
+}
+
+async function exibirGraficoOSs() {
+    const div = document.querySelector('.bar-graph');
+    div.innerHTML = '';
+    const h2 = document.createElement('h2');
+    h2.innerHTML = 'OSs executadas por período';
+    div.appendChild(h2);
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+
+    //Dados
+    //Agrupar as executadas nos ultimos 7 dias
+    const dias = [];
+    for (let i = 0; i < 7; i++) {
+        const data = new Date();
+        data.setDate(data.getDate() - i);
+        dias.push({ encerramento: data.toLocaleDateString('pt-BR') });
+    }
+    const executadas = [];
+    dias.forEach(d => {
+        executadas.push(oss.filter(o => new Date(o.encerramento).toLocaleDateString('pt-BR') == d.encerramento).length);
     });
-    return ctx;
+    //Gráfico
+    const dados = {
+        labels: dias.map(c => c.encerramento),
+        datasets: [{
+            label: 'Executadas',
+            data: executadas,
+            backgroundColor: '#1a9f8e',
+        }]
+    };
+    Chart.defaults.plugins.legend.display = true;
+    const config = {
+        type: 'bar',
+        data: dados,
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    };
+    new Chart(ctx, config);
+    div.appendChild(canvas);
 }
 
 async function janelaOs(id) {
