@@ -28,8 +28,6 @@ async function iniciarProducao() {
     if (!usuario) {
         window.location.href = './login.html';
     } else {
-        if (usuario.setor == 'Manutenção')
-            document.getElementById('bt1').classList.remove('oculto');
         m.innerHTML = `Olá, ${usuario.nome}`;
         await preencherColaboradores();
         await preencherOssProducao();
@@ -42,8 +40,6 @@ async function iniciarDashboard() {
     if (!usuario) {
         window.location.href = './login.html';
     } else {
-        if (usuario.setor == 'Manutenção')
-            document.getElementById('bt1').classList.remove('oculto');
         m.innerHTML = `Olá, ${usuario.nome}`;
         await preencherColaboradores();
         await preencherOssFechadas();
@@ -51,10 +47,6 @@ async function iniciarDashboard() {
         divTabela.className = 'dash-tabela';
         divTabela.appendChild(await exibirTabela());
         corpo.appendChild(divTabela);
-        const divGrafBarras = document.createElement('div');
-        divGrafBarras.className = 'dash-grafico';
-        divGrafBarras.appendChild(await exibirGraficoColaborador());
-        corpo.appendChild(divGrafBarras);
     }
 }
 
@@ -251,7 +243,7 @@ async function exibirTabela() {
     return table;
 }
 
-async function exibirGraficoColaborador(){
+async function exibirGraficoColaborador() {
     const ctx = document.createElement('canvas').getContext('2d');
     const colaboradores = [];
     const oss = [];
