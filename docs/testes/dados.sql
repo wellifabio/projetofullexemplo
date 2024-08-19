@@ -37,7 +37,16 @@ insert into os(descricao,colaborador,executor,abertura,encerramento) values
 ("Instalação de lâmpada de emergência no corredor","201","203",date_sub(now(),interval 150 hour),date_sub(now(),interval 90 hour)),
 ("Porta da recepção está rangendo","200","203",date_sub(now(),interval 130 hour),date_sub(now(),interval 80 hour)),
 ("Porta da recepção quebrada","201","202",date_sub(now(),interval 95 hour),date_sub(now(),interval 60 hour)),
-("Torneira do banheiro feminino com grande vazamento","200","202",date_sub(now(),interval 90 hour),date_sub(now(),interval 55 hour));
+("Torneira do banheiro feminino com grande vazamento","200","202",date_sub(now(),interval 90 hour),date_sub(now(),interval 55 hour)),
+("Troca da torneira da pia do banheiro feminino","201","206",date_sub(now(),interval 73 hour),date_sub(now(),interval 48 hour)),
+("Instalação de lâmpada de emergência na recepção","200","206",date_sub(now(),interval 68 hour),date_sub(now(),interval 32 hour)),
+("Instalação de lâmpada de emergência no corredor","201","203",date_sub(now(),interval 59 hour),date_sub(now(),interval 18 hour)),
+("Instalação de tomada 220v na administração","201","205",date_sub(now(),interval 52 hour),null),
+("Limpeza pós obra na sala de reuniões","204","208",date_sub(now(),interval 48 hour),null),
+("Pintura do poste da garagem externa","200","202",date_sub(now(),interval 42 hour),null),
+("Instalação de refletores no estacionamento","201",null,date_sub(now(),interval 33 hour),null),
+("Construção de uma porta adicional na sala da contabilidade","209",null,date_sub(now(),interval 28 hour),null),
+("Instalação de tomadas na sala de reunição","209",null,date_sub(now(),interval 17 hour),null);
 
 drop procedure if exists add_comentario;
 delimiter $
@@ -52,9 +61,9 @@ looping: LOOP
     set v_data = date_add((select abertura from os where id = v_i),interval 1 hour);
     set v_data2 = (select encerramento from os where id = v_i);
     insert into comentario(os, colaborador, data, comentario) values (v_i, v_colaborador, v_data,"Verificando OS");
-    insert into comentario(os, colaborador, data, comentario) values (v_i, v_colaborador, v_data2,"OS finalizada");
+    insert into comentario(os, colaborador, data, comentario) values (v_i, v_colaborador, v_data2,"OS concluída com sucesso");
     set v_i = v_i + 1;
-    IF v_i >= 49 THEN
+    IF v_i >= 52 THEN
         LEAVE looping;
     END IF;
 END LOOP looping;

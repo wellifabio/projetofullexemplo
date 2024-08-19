@@ -6,10 +6,14 @@ const bt1 = document.getElementById('bt1');
 
 var bt1Status = true;
 
+// Configuração do Axios
 const api = axios.create({
     baseURL: uri
 });
 
+// Função para exibir mensagens no rodapé da página
+//UX - User Experience, exibir menságens de erro ou sucesso por Alert é muito agressivo
+//por isso optei por exibir as mensagens no rodapé da página
 function msg(mensagem, destaque) {
     const m = document.querySelector('.msg');
     m.innerHTML = mensagem;
@@ -26,6 +30,7 @@ function msg(mensagem, destaque) {
     }
 }
 
+// Função para verificar se o usuário está logado
 function iniciar() {
     if (usuario) {
         window.location.href = 'home.html';
@@ -34,6 +39,7 @@ function iniciar() {
     login.matricula.focus();
 }
 
+// Função para alternar entre as telas de cadastro e login
 function alternarCadastroLogin() {
     cadastro.classList.toggle('oculto');
     login.classList.toggle('oculto');
@@ -48,6 +54,7 @@ function alternarCadastroLogin() {
     }
 }
 
+//Enviar dados para a API e realizar o cadastro
 cadastro.addEventListener('submit', function (e) {
     e.preventDefault();
     if (cadastro.pin.value === cadastro.pin2.value) {
@@ -73,6 +80,7 @@ cadastro.addEventListener('submit', function (e) {
     }
 });
 
+//Enviar dados para a API e realizar o login
 login.addEventListener('submit', function (e) {
     e.preventDefault();
     const matricula = login.matricula.value;
@@ -88,6 +96,10 @@ login.addEventListener('submit', function (e) {
             window.location.href = './home.html';
         })
         .catch(err => {
+            if(err.code === 'ERR_NETWORK') {
+                alert('Servidor não está respondendo', true);
+                return;
+            }
             msg('Matrícula ou PIN inválidos', true);
         });
 });

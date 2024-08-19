@@ -32,26 +32,22 @@
 	{
 		"id": 6,
 		"descricao": "Instalação de tomadas na sala de descanso",
-		"colaborador": "209",
-		"executor": "205"
+		"colaborador": "209"
 	},
 	{
 		"id": 7,
 		"descricao": "Troca da torneira da pia do refeitório",
-		"colaborador": "208",
-		"executor": "206"
+		"colaborador": "208"
 	},
 	{
 		"id": 8,
 		"descricao": "Instalação do batente da porta da cozinha",
-		"colaborador": "200",
-		"executor": null
+		"colaborador": "200"
 	},
 	{
 		"id": 9,
 		"descricao": "Instalação do batente da porta do banheiro feminino",
-		"colaborador": "206",
-		"executor": null
+		"colaborador": "206"
 	},
 	{
 		"id": 10,
