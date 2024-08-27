@@ -1,3 +1,4 @@
+use uss;
 insert into os(descricao,colaborador,executor,abertura,encerramento) values
 ("Instalação de lâmpada de emergência no corredor","201","203",date_sub(now(),interval 1 hour),now()),
 ("Instalação de tomada 220v na administração","202","205",date_sub(now(),interval 480 hour),date_sub(now(),interval 367 hour)),
