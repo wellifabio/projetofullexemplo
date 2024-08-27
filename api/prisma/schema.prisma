@@ -25,6 +25,8 @@ model Os{
   executor String? @db.VarChar(8)
   abertura DateTime @default(now())
   encerramento DateTime?
+  latitude Float? @default(-22.703024167060327)
+  longitude Float? @default(-46.99293384579572)
   comentarios Comentario[] @relation("possui")
   colaboradores Colaborador @relation("abre",fields: [colaborador], references: [matricula])
   executores Colaborador? @relation("executa", fields: [executor], references: [matricula])

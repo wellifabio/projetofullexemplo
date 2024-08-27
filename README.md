@@ -14,7 +14,7 @@
 |[<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSg1MndL-Xp1JcnqaB0YOqTp6zDjrwYyGKsPA&s" style="width:50px">](https://react.dev/)|React|Front End|
 |[<img src="https://axios-http.com/assets/logo.svg" style="width:100px">](https://axios-http.com/ptbr/docs/intro)|Axios|Front End consumir API|
 
-## Passos para a Execução da API e Front-End
+## Passos para a Execução da API
 - 1 Clonar este repositório
 - 2 Abrir com o VS code
 - 3 Na pasta ./api criar um arquivo **.env** contendo: 
@@ -37,15 +37,27 @@ mysql -u root
 ```bash
 npx nodemon
 ```
-- 8 Front-End acessar a pasta ./vanilla e executar o **index.html** com **live server**
-- 9 Caso queira testar com Insomnia, abrir o arquivo **./docs/testes/Insomnia.json** no Insomnia.
-- 10 Para executar o Front-End em React, acessar a pasta ./react e executar os comandos:
+- 8 Para testar com Insomnia, importar o arquivo **./docs/testes/Insomnia.json**.
+
+## Execução do Front-End
+- 1 Acessar a pasta ./vanilla e executar o **index.html** com **live server**
+- 3 Para executar o Front-End em React, acessar a pasta ./react e executar os comandos:
 ```bash
 cd react
 npm i
 npm start
 ```
 - **Obs**: Versão com React em desenvolvimento, poucas funcionalidades implementadas.
+
+## Versão Mobile em flutter
+- 1 Instalar o Flutter e o Android Studio
+- 2 Abrir o Android Studio e criar um emulador
+- 3 Executar o comando:
+```bash
+cd flutter
+flutter run
+```
+- **Obs**: Versão com Flutter em desenvolvimento, poucas funcionalidades implementadas.
 
 ## Wireframe e Protótipo
 ![Wireframe](./docs/design/wireframe2.png)

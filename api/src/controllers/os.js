@@ -25,7 +25,9 @@ const read = async (req, res) => {
                 executor: true,
                 abertura: true,
                 encerramento: true,
-                comentarios: true
+                comentarios: true,
+                latitude: true,
+                longitude: true
             }
         });
         return res.json(os);
