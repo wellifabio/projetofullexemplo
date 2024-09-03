@@ -24,7 +24,7 @@ DATABASE_URL="mysql://root@localhost:3306/oss?schema=public&timezone=UTC"
 KEY="base64:q3
 ```
 - 4 Abrir XAMPP  e clicar em Start nos serviços **Mysql** e **Apache**.
-- 5 Instalar as dependências e o banco de dados
+- 5 Instalar as dependências e o banco de dados, no **VsCode**, abra um terminal **CTRL + '** e digite os seguintes comandos:
 ```bash
 cd api 
 npm i
