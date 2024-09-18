@@ -65,6 +65,8 @@ npm start
 ### Mobile em Flutter
 - 1 Instalar o **Flutter** e o **Android Studio** com o **Emulador** ([Tutorial](https://github.com/wellifabio/cursoflutter/tree/main/aula01)).
 - 2 Abrir o Android Studio, criar e abrir um **Emulador** de celular.
+![Imagem-Exemplo](./flutter/readme-images/android.png)
+![Imagem-Exemplo](./flutter/readme-images/emulador.png)
 - 3 Escolha uma das versões do app na pasta flutter (**serv_facil_colaborador** ou **serv_facil_executor**) e abra com o Vscode.
 - 4 Abra um terminal bash ou cmd e digite:
 ```bash
@@ -73,5 +75,7 @@ flutter pub get
 - 5 Selecione um emulador.
 ![Imagem-Exemplo](./flutter/readme-images/exemplo.png)
 - 6 Na aba de debug do vscode, clique em Run and Debug
-- 7 No arquivo constant.dart dentro de /lib, edite o ip para corresponder ao do seu computador.
+- 7 Verifique o ip do seu computador
+![Imagem-Exemplo](./flutter/readme-images/ipconfig.png)
+- 8 No arquivo constant.dart dentro de /lib, edite o ip para corresponder ao do seu computador.
 ![Imagem-Exemplo](./flutter/readme-images/exemplo-constant.png)
