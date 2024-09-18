@@ -17,7 +17,15 @@ O sistema ServiFacil é uma aplicação **web** e **mobile** para gerenciamento 
 |[<img src="https://cdn.prod.website-files.com/5ee12d8d7f840543bde883de/5ef3a1148ac97166a06253c1_flutter-logo-white-inset.svg" style="width:50px">](https://flutter.dev/)|**Flutter**|Framework Mobile com linguagem Dart|
 |[<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJU_1vS1TGPCrGIrnly55uflMlC6tTNxkdjA&s" style="width:50px">](https://developer.android.com/studio?hl=pt-br)|**Android Studio**|IDE Mobile para utilizar Emulador|
 
-## Passos para a Execução da API
+## Wireframe e Protótipo
+![Wireframe](./docs/design/wireframe2.png)
+![Protótipo](./docs/design/prototipo.png)
+![Protótipo Web](./docs/design/prototipo-web.png)
+- [Arquivo Figma](./docs/design/ServiFacil.fig)
+- [Weireframe WEB em PDF](./docs/design/ServiFacil-WEB.pdf)
+
+## Passos para a execução e testes
+### API - Back-End
 - 1 Clonar este repositório
 - 2 Abrir com o **VsCode**
 - 3 Na pasta ./api criar um arquivo **.env** contendo: 
@@ -42,9 +50,9 @@ npx nodemon
 ```
 - 8 Para testar com Insomnia, importar o arquivo **./docs/testes/Insomnia.json**.
 
-## Execução do Front-End - Vanilla
+### Front-End - Vanilla
 - 1 Acessar a pasta ./vanilla e executar o arquivo **index.html** com **live server** (Extensão do VsCode) ou **Open with Live Server**.
-## Execução do Front-End - React
+### Front-End - React
 - 1 Abrir a pasta ./react com VsCode
 - 2 Abrir um **terminal** cmd ou bash e executar os comandos a seguir:
 ```bash
@@ -54,7 +62,7 @@ npm start
 ```
 - **Obs**: Versão com React em desenvolvimento, poucas funcionalidades implementadas.
 
-## Versão Mobile em flutter
+### Mobile em Flutter
 - 1 Instalar o **Flutter** e o **Android Studio** com o **Emulador** ([Tutorial](https://github.com/wellifabio/cursoflutter/tree/main/aula01)).
 - 2 Abrir o Android Studio, criar e abrir um **Emulador** de celular.
 - 3 Escolha uma das versões do app na pasta flutter (**serv_facil_colaborador** ou **serv_facil_executor**) e abra com o Vscode.
@@ -67,10 +75,3 @@ flutter pub get
 - 6 Na aba de debug do vscode, clique em Run and Debug
 - 7 No arquivo constant.dart dentro de /lib, edite o ip para corresponder ao do seu computador.
 ![Imagem-Exemplo](./flutter/readme-images/exemplo-constant.png)
-
-## Wireframe e Protótipo
-![Wireframe](./docs/design/wireframe2.png)
-![Protótipo](./docs/design/prototipo.png)
-![Protótipo Web](./docs/design/prototipo-web.png)
-- [Arquivo Figma](./docs/design/ServiFacil.fig)
-- [Weireframe WEB em PDF](./docs/design/ServiFacil-WEB.pdf)
