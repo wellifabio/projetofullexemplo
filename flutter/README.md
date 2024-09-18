@@ -10,5 +10,5 @@ flutter pub get
 3. Selecione um emulador.
 ![Imagem-Exemplo](./readme-images/exemplo.png)
 4. Na aba de debug do vscode, clique em Run and Debug
-5. No arquivo constant.dart dentro de /lib, edit o ip para corresponder ao do computador.
+5. No arquivo constant.dart dentro de /lib, edite o ip para corresponder ao do seu computador.
 ![Imagem-Exemplo](./readme-images/exemplo-constant.png)
