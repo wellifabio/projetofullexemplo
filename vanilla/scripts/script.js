@@ -1,4 +1,4 @@
-const uri = "http://localhost:3000"
+const uri = "http://192.168.1.96:3000"
 const usuario = JSON.parse(window.localStorage.getItem('usuario'));
 const container = document.querySelector('.container');
 const m = document.querySelector('.msg');
