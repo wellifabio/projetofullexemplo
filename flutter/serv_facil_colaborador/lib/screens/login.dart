@@ -32,7 +32,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
       Provider.of<UserProvider>(context, listen: false).user = user;
 
-      navigatorKey.currentState?.pushReplacementNamed('/home');
+      navigatorKey.currentState?.pushReplacementNamed('/nav');
     } catch (e) {
       setState(() {
         _message = e.toString().split(':')[1];

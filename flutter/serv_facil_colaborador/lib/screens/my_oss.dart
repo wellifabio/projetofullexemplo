@@ -7,39 +7,24 @@ import 'package:serv_facil/provider/user_provider.dart';
 import 'package:serv_facil/services/os_service.dart';
 import 'package:serv_facil/widgets/os/os_item.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class MyOss extends StatefulWidget {
+  const MyOss({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<MyOss> createState() => _MyOssState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  User? user;
-
-  late Future _futureOss;
-
-  Future<void> _refresh() async {
-    final String token = Provider.of<UserProvider>(context, listen: false).user.token!;
-    setState(() {
-      _futureOss = OsService.getOss(token: token);
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _refresh();
-  }
+class _MyOssState extends State<MyOss> {
+  User? colaborador;
 
   @override
   Widget build(BuildContext context) {
-    user = Provider.of<UserProvider>(context).user;
+    colaborador = Provider.of<UserProvider>(context).user;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          'Ordens de Serviço',
+          'Minhas OS\'s',
           style: TextStyle(
             fontSize: 24,
             color: Theme.of(context).colorScheme.secondary,
@@ -65,28 +50,30 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      body: RefreshIndicator(
-        onRefresh: _refresh,
-        child: FutureBuilder(
-          future: _futureOss,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              final data = snapshot.data!;
-              return ListView.builder(
-                itemCount: data.length,
-                itemBuilder: (context, index) {
-                  final Os os = data[index];
-                  return OsItem(os: os);
-                },
-              );
-            } else if (snapshot.hasError) {
-              return Text('${snapshot.error}');
-            }
+      body: FutureBuilder(
+        future: OsService.getCurrentUserOs(
+          colaborador: colaborador!.matricula,
+          token: colaborador!.token!,
+        ),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState != ConnectionState.done) {
             return const Center(
               child: CircularProgressIndicator(),
             );
-          },
-        ),
+          }
+          if (snapshot.hasError) {
+            return Text('${snapshot.error}');
+          } else {
+            final data = snapshot.data!;
+            return ListView.builder(
+              itemCount: data.length,
+              itemBuilder: (context, index) {
+                final Os os = data[index];
+                return OsItem(os: os);
+              },
+            );
+          }
+        },
       ),
     );
   }

@@ -75,6 +75,42 @@ class OsService {
     }
   }
 
+  static Future<List<Os>> getCurrentUserOs({
+    required String colaborador,
+    required String token,
+  }) async {
+    final response = await http.get(
+      Uri.parse('$apiUrl/os/colaborador/$colaborador'),
+      headers: {
+        'authorization': token,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final List body = jsonDecode(response.body);
+      for (Map<String, dynamic> os in body) {
+        final User colaborador = await UserService.getUser(
+          token: token,
+          matricula: os['colaborador'],
+        );
+        User? executor;
+
+        if (os['executor'] != null) {
+          executor = await UserService.getUser(
+            token: token,
+            matricula: os['executor'],
+          );
+          os.update('executor', (value) => executor);
+        }
+        os.update('colaborador', (value) => colaborador);
+      }
+
+      return body.map((e) => Os.fromJson(e)).toList();
+    } else {
+      throw Exception('Could not get current user oss.');
+    }
+  }
+
   static Future<void> addOs({
     required User colaborador,
     required String descricao,
@@ -130,13 +166,15 @@ class OsService {
     }
   }
 
-  static Future<void> removeOs({ required int osId, required String token}) async {
+  static Future<void> removeOs(
+      {required int osId, required String token}) async {
     final headers = <String, String>{
       'authorization': token,
       "content-type": "application/json"
     };
 
-    final response = await http.delete(Uri.parse('$apiUrl/os/$osId'), headers: headers);
+    final response =
+        await http.delete(Uri.parse('$apiUrl/os/$osId'), headers: headers);
 
     if (response.statusCode != 204) {
       throw Exception('Could not delete OS.');

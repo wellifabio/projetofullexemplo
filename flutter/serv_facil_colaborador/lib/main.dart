@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:serv_facil/nav.dart';
 import 'package:serv_facil/provider/user_provider.dart';
-import 'package:serv_facil/screens/home.dart';
 import 'package:serv_facil/screens/login.dart';
 import 'package:serv_facil/screens/register.dart';
 import 'package:serv_facil/theme/light_theme.dart';
@@ -29,7 +29,7 @@ class MainApp extends StatelessWidget {
       theme: LightTheme().theme,
       routes: {
         '/login': (context) => const LoginScreen(),
-        '/home': (context) => const HomeScreen(),
+        '/nav': (context) => const Nav(),
         '/register': (context) => const RegisterScreen(),
       },
     );

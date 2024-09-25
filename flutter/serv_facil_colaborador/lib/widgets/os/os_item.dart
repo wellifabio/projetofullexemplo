@@ -16,6 +16,15 @@ class OsItem extends StatelessWidget {
     return number.toString().padLeft(2, '0');
   }
 
+  void _showModal(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) => ModalDetails(
+        os: os,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -23,7 +32,9 @@ class OsItem extends StatelessWidget {
       child: Container(
         color: os.finished
             ? Theme.of(context).colorScheme.tertiary.withOpacity(0.55)
-            : Theme.of(context).colorScheme.secondary,
+            : os.executor == null
+                ? Theme.of(context).colorScheme.tertiary
+                : Theme.of(context).colorScheme.secondary,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 5),
           child: Column(
@@ -49,7 +60,10 @@ class OsItem extends StatelessWidget {
               ),
               os.executor != null
                   ? OsItemInfo(
-                      title: 'Executor', content: os.executor!.nome, os: os)
+                      title: 'Executor',
+                      content: os.executor!.nome,
+                      os: os,
+                    )
                   : const SizedBox(),
               OsItemInfo(
                 title: 'Aberto em:',
@@ -68,17 +82,10 @@ class OsItem extends StatelessWidget {
               Align(
                 alignment: Alignment.centerRight,
                 child: SmallButton(
-                  onTap: () {
-                    showModalBottomSheet(
-                      context: context,
-                      builder: (context) => ModalDetails(
-                        os: os,
-                      ),
-                    );
-                  },
+                  onTap: () => _showModal(context),
                   text: 'Detalhes',
                 ),
-              )
+              ),
             ],
           ),
         ),

@@ -68,6 +68,7 @@ class _ModalDetailsState extends State<ModalDetails> {
       };
 
       CommentService.addComment(data: data, token: user.token!);
+      _commentController.text = '';
 
       Fluttertoast.showToast(
         msg: 'Comentário adicionado com sucesso!',
@@ -97,9 +98,12 @@ class _ModalDetailsState extends State<ModalDetails> {
   @override
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context).user;
-    return !widget.os.finished
-        ? _buildUnfishedOsModal(context)
-        : _buildFinishedOsModal(context);
+    if (widget.os.finished ||
+        widget.os.colaborador.matricula != user!.matricula) {
+      return _buildFinishedOsModal(context);
+    } else {
+      return _buildUnfishedOsModal(context);
+    }
   }
 
   SizedBox _buildFinishedOsModal(BuildContext context) {
@@ -168,61 +172,64 @@ class _ModalDetailsState extends State<ModalDetails> {
                 ),
               ),
               Expanded(
-                child: FutureBuilder(
-                  future: CommentService.getComments(
-                    osId: widget.os.id,
-                    token: user!.token!,
-                  ),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState != ConnectionState.done) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }
-                    if (snapshot.hasError) {
-                      return Text('${snapshot.error}');
-                    }
-                    if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-                      final data = snapshot.data!;
-                      return InfoContainerWidget(
-                        margin: const EdgeInsets.only(top: 25),
-                        child: Column(
-                          children: [
-                            Text(
-                              'Comentários:',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Theme.of(context).colorScheme.primary,
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 10),
+                  child: FutureBuilder(
+                    future: CommentService.getComments(
+                      osId: widget.os.id,
+                      token: user!.token!,
+                    ),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState != ConnectionState.done) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      if (snapshot.hasError) {
+                        return Text('${snapshot.error}');
+                      }
+                      if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                        final data = snapshot.data!;
+                        return InfoContainerWidget(
+                          margin: const EdgeInsets.only(top: 25),
+                          child: Column(
+                            children: [
+                              Text(
+                                'Comentários:',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Theme.of(context).colorScheme.primary,
+                                ),
                               ),
-                            ),
-                            Expanded(
-                              child: ListView.builder(
-                                itemCount: data.length,
-                                itemBuilder: (context, index) {
-                                  final Comment comment = data[index];
-                                  return Text(comment.comentario);
-                                },
+                              Expanded(
+                                child: ListView.builder(
+                                  itemCount: data.length,
+                                  itemBuilder: (context, index) {
+                                    final Comment comment = data[index];
+                                    return Text(comment.comentario);
+                                  },
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                      );
-                    } else {
-                      return Padding(
-                        padding: const EdgeInsets.only(top: 25),
-                        child: Text(
-                          'Esta OS não possui comentários.',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Theme.of(context).colorScheme.primary,
+                            ],
                           ),
-                        ),
-                      );
-                    }
-                  },
+                        );
+                      } else {
+                        return Padding(
+                          padding: const EdgeInsets.only(top: 25),
+                          child: Text(
+                            'Esta OS não possui comentários.',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
+                          ),
+                        );
+                      }
+                    },
+                  ),
                 ),
               ),
             ],
@@ -377,54 +384,7 @@ class _ModalDetailsState extends State<ModalDetails> {
                         showDialog(
                           context: context,
                           builder: (context) {
-                            return AlertDialog(
-                              title: const Text('Confirme sua ação'),
-                              content: SingleChildScrollView(
-                                child: ListBody(
-                                  children: [
-                                    Text(
-                                      'Você tem certeza disso?',
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .primary,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              actions: [
-                                TextButton(
-                                  onPressed: () =>
-                                      navigatorKey.currentState?.pop(),
-                                  child: Text(
-                                    'Cancelar',
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                      color:
-                                          Theme.of(context).colorScheme.primary,
-                                    ),
-                                  ),
-                                ),
-                                TextButton(
-                                  onPressed: () {
-                                    _removeOs();
-                                    navigatorKey.currentState?.pop();
-                                  },
-                                  child: Text(
-                                    'Confirmar',
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                      color:
-                                          Theme.of(context).colorScheme.tertiary,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            );
+                            return _confirmationAlert(context);
                           },
                         );
                       },
@@ -437,6 +397,52 @@ class _ModalDetailsState extends State<ModalDetails> {
           ),
         ),
       ),
+    );
+  }
+
+  AlertDialog _confirmationAlert(BuildContext context) {
+    return AlertDialog(
+      title: const Text('Confirme sua ação'),
+      content: SingleChildScrollView(
+        child: ListBody(
+          children: [
+            Text(
+              'Você tem certeza disso?',
+              style: TextStyle(
+                fontSize: 18,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+            ),
+          ],
+        ),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => navigatorKey.currentState?.pop(),
+          child: Text(
+            'Cancelar',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Theme.of(context).colorScheme.primary,
+            ),
+          ),
+        ),
+        TextButton(
+          onPressed: () {
+            _removeOs();
+            navigatorKey.currentState?.pop();
+          },
+          child: Text(
+            'Confirmar',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Theme.of(context).colorScheme.tertiary,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
